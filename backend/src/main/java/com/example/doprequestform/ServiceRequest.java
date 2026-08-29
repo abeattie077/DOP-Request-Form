@@ -3,6 +3,8 @@ package com.example.doprequestform;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,6 +48,7 @@ public class ServiceRequest {
 	private boolean customerHasBeenContacted = false;
 	
 	//constructors
+	@JsonCreator
 	public ServiceRequest() {
 	}
 	public ServiceRequest(String companyName, String firstName, String lastName, String address, LocalDate desiredDate, int units, boolean dopTesting, boolean filterChange, boolean other, String unitDetails, String additionalInfo) {

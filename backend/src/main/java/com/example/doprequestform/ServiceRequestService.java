@@ -1,5 +1,7 @@
 package com.example.doprequestform;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +20,10 @@ public class ServiceRequestService {
 			return serviceRequestRepository.save(serviceRequest);
 		}
 		throw new ServiceRequestException();
+	}
+	
+	public List<ServiceRequest> getAllRequests(){
+		return serviceRequestRepository.findAll();
 	}
 	
 }
