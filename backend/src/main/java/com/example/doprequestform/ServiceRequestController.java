@@ -2,9 +2,12 @@ package com.example.doprequestform;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +36,12 @@ public class ServiceRequestController {
 	public ResponseEntity<List<ServiceRequest>> getAllRequests(){
 		List<ServiceRequest> requests = serviceRequestService.getAllRequests();
 		return ResponseEntity.ok(requests);
+	}
+	
+	//mark request as contacted
+	@PutMapping("/{id}/contacted")
+	public boolean markCustomerAsContacted(@PathVariable Long id, Authentication authentication) {
+		String username = authentication.getName();
+		return serviceRequestService.markCustomerContacted(id, username);
 	}
 }

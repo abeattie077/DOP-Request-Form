@@ -46,6 +46,7 @@ public class ServiceRequest {
 	//backend items
 	private LocalDateTime submittedAt = LocalDateTime.now();
 	private boolean customerHasBeenContacted = false;
+	private String contactedBy;
 	
 	//constructors
 	@JsonCreator
@@ -108,6 +109,9 @@ public class ServiceRequest {
 	public boolean isCustomerHasBeenContacted() {
 		return this.customerHasBeenContacted;
 	}
+	public String getContactedBy() {
+		return this.contactedBy;
+	}
 	
 	//setters
 	public void setCompanyName(String companyName) {
@@ -143,7 +147,10 @@ public class ServiceRequest {
 	public void setAdditionalInformation(String additionalInformation) {
 		this.additionalInformation = additionalInformation;
 	}
-	public void setCustomerHasBeenContacted(boolean customerHasBeenContacted) {
-		this.customerHasBeenContacted = customerHasBeenContacted;
+	public void markCustomerContacted(String employeeUsername) {
+		if (!this.customerHasBeenContacted) {
+			this.customerHasBeenContacted = true;
+			this.contactedBy = employeeUsername;
+		}
 	}
 }

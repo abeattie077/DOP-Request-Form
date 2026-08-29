@@ -22,14 +22,16 @@ public class Employee {
 	private String encodedPassword;
 	@Column(nullable = false)
 	private String name;
+	private String role;
 	
 	//constructors
 	public Employee() {
 	}
-	public Employee(String username, String name, String encodedPW) {
+	public Employee(String username, String name, String encodedPW, String role) {
 		this.username = username;
 		this.name = name;
 		this.encodedPassword = encodedPW;
+		this.role = role;
 	}
 	
 	//getters
@@ -44,6 +46,9 @@ public class Employee {
 	}
 	public String getName() {
 		return this.name;
+	}
+	public String getRole() {
+		return this.role;
 	}
 	
 	//setters
