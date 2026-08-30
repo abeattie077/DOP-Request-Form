@@ -33,6 +33,10 @@ public class ServiceRequest {
 	private LocalDate desiredServiceDate;
 	@Column(name = "number_of_units", nullable = false, unique = false)
 	private int numberOfUnits;
+	@Column (name = "customer_phone", nullable = false)
+	private String customerPhone;
+	@Column (name = "customer_email", nullable = false)
+	private String customerEmail;
 	
 	//required attributes service selections
 	private boolean dopTesting;
@@ -52,7 +56,7 @@ public class ServiceRequest {
 	@JsonCreator
 	public ServiceRequest() {
 	}
-	public ServiceRequest(String companyName, String firstName, String lastName, String address, LocalDate desiredDate, int units, boolean dopTesting, boolean filterChange, boolean other, String unitDetails, String additionalInfo) {
+	public ServiceRequest(String companyName, String firstName, String lastName, String address, LocalDate desiredDate, int units, boolean dopTesting, boolean filterChange, boolean other, String unitDetails, String additionalInfo, String customerPhone, String customerEmail) {
 		this.companyName = companyName;
 		this.requesterFirstName = firstName;
 		this.requesterLastName = lastName;
@@ -64,6 +68,8 @@ public class ServiceRequest {
 		this.otherServiceRequest = other;
 		this.unitDetails = unitDetails;
 		this.additionalInformation = additionalInfo;
+		this.customerPhone = customerPhone;
+		this.customerEmail = customerEmail;
 	}
 	
 	//getters
@@ -112,6 +118,12 @@ public class ServiceRequest {
 	public String getContactedBy() {
 		return this.contactedBy;
 	}
+	public String getCustomerPhone() {
+		return this.customerPhone;
+	}
+	public String getCustomerEmail() {
+		return this.customerEmail;
+	}
 	
 	//setters
 	public void setCompanyName(String companyName) {
@@ -152,5 +164,11 @@ public class ServiceRequest {
 			this.customerHasBeenContacted = true;
 			this.contactedBy = employeeUsername;
 		}
+	}
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
+	}
+	public void setCustomerEmail(String customerEmail) {
+		this.customerEmail = customerEmail;
 	}
 }

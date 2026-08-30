@@ -21,7 +21,8 @@ public class ServiceRequestService {
 				|| serviceRequest.getRequesterFirstName().isBlank() || serviceRequest.getRequesterLastName() == null ||
 				serviceRequest.getRequesterLastName().isBlank() || serviceRequest.getServiceAddress() == null ||
 				serviceRequest.getServiceAddress().isBlank() || serviceRequest.getDesiredServiceDate() == null ||
-				serviceRequest.getNumberOfUnits()<=0) {
+				serviceRequest.getNumberOfUnits()<=0 || serviceRequest.getCustomerPhone() == null || serviceRequest.getCustomerPhone().isBlank() ||
+				serviceRequest.getCustomerEmail() == null || serviceRequest.getCustomerEmail().isBlank()) {
 			throw new ServiceRequestException();
 		}
 		if (serviceRequest.isDopTesting() || serviceRequest.isFilterChange() || serviceRequest.isOtherServiceRequest()) {
