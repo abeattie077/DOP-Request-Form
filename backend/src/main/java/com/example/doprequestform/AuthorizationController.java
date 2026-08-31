@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -79,5 +80,12 @@ public class AuthorizationController {
 		}
 		SecurityContextHolder.clearContext();
 		return true;
+	}
+	
+	//get role
+	@GetMapping("/me")
+	public CurrentUserResponse getCurrentUser(Authentication authentication) {
+		Employee employee = employeeService.getEmployee(authentication.getName()).orElseThrow();
+		return new CurrentUserResponse(employee.getUsername(), employee.getName(), employee.getRole());
 	}
 }

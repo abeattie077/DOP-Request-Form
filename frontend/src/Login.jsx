@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Login(){
+function Login({setLoggedIn, setCurrentUser}){
     const API_URL = import.meta.env.VITE_API_URL
     const[username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -17,9 +17,16 @@ function Login(){
             if (response.ok){
                 const authenticated = await response.json()
                 if (authenticated){
-                    console.log('Login Successful')}
-                else{
-                    setErrorMessage('Invalid username or password')
+                    console.log('Login Successful')
+                    const userResponse = await fetch(`${API_URL}/api/authorization/me`, {method: 'GET', credentials: 'include'})
+                    if (userResponse.ok){
+                        const userData = await userResponse.json()
+                        setCurrentUser(userData)
+                        setLoggedIn(true)
+                    }
+                    else{
+                    setErrorMessage('Unable to retrieve user information.')
+                    }
                 }
              }    
             else{setErrorMessage('Invalid username or password')}
