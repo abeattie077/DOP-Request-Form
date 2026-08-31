@@ -1,6 +1,7 @@
 import { useState } from 'react'
 function Request(){
 
+  const API_URL = import.meta.env.VITE_API_URL
   const [companyName, setCompanyName] = useState('')
   const [requesterFirstName, setRequesterFirstName] = useState('')
   const [requesterLastName, setRequesterLastName] = useState('')
@@ -14,9 +15,13 @@ function Request(){
   const [otherServiceRequest, setOtherServiceRequest] = useState(false)
   const [unitDetails, setUnitDetails] = useState('')
   const [additionalInformation, setAdditionalInformation] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  function handleSubmit(event){
+  async function handleSubmit(event){
     event.preventDefault()
+    setSuccessMessage('')
+    setErrorMessage('')
     const request = {
         companyName,
         requesterFirstName,
@@ -32,9 +37,35 @@ function Request(){
         unitDetails,
         additionalInformation
     }
-    console.log(request)
-  }
+    try{
+      const response = await fetch(`${API_URL}/api/requests`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(request)})
 
+    if (response.ok){
+      const savedRequest = await response.json()
+      console.log(savedRequest)
+      setSuccessMessage('Request Submitted Successfully')
+      setCompanyName('')
+      setRequesterFirstName('')
+      setRequesterLastName('')
+      setCustomerPhone('')
+      setCustomerEmail('')
+      setServiceAddress('')
+      setDesiredServiceDate('')
+      setNumberOfUnits('')
+      setDOPTesting(true)
+      setFilterChange(false)
+      setOtherServiceRequest(false)
+      setUnitDetails('')
+      setAdditionalInformation('')
+    }
+    else{
+      setErrorMessage('There was a problem submitting the request.')
+    }
+  } 
+    catch(error){console.log(error)
+    setErrorMessage('Unable to connect to the server.')
+  }
+}
   return(
      <div>
       <h1>On Site DOP Service Request</h1>
@@ -95,6 +126,8 @@ function Request(){
           <textarea value={additionalInformation} onChange={(event) => setAdditionalInformation(event.target.value)}/>
         </div>
         <button type="submit">Submit Request</button>
+        {successMessage && <p>{successMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>}
       </form>     
     </div>
   )
